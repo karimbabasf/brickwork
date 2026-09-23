@@ -11,6 +11,13 @@ function place(x: number, y: number, w: number, h: number) {
   return { left, top }
 }
 
+/** Centred just above the pointer, so the label sits on the brick it names. */
+function above(x: number, y: number, w: number, h: number) {
+  const left = Math.min(Math.max(12, x - w / 2), window.innerWidth - w - 12)
+  const top = y - h - 18 < 12 ? y + 22 : y - h - 18
+  return { left, top }
+}
+
 /** Hovering a brick says what it was. */
 export function Tooltip() {
   const hover = useView((s) => s.hover)
@@ -20,9 +27,9 @@ export function Tooltip() {
   const goal = useStore((s) => (brick ? s.goals.find((g) => g.id === brick.goal) : undefined))
   if (!hover || !brick || !goal || inspect || film) return null
   return (
-    <div className="tip" style={place(hover.x, hover.y, 240, 64)} role="tooltip">
+    <div className="tip" style={{ ...above(hover.x, hover.y, 240, brick.note ? 58 : 38), width: 240 }} role="tooltip">
       <p className="tip-line">
-        {goal.name}, {SIZE_WORD[brick.size]}. {formatDayLong(dayKey(brick.t))}
+        {goal.name}, {SIZE_WORD[brick.size]} brick. {formatDayLong(dayKey(brick.t))}
       </p>
       {brick.note && <p className="tip-note">{brick.note}</p>}
     </div>

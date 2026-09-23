@@ -16,7 +16,7 @@ export const PRESETS: Preset[] = [
   { key: 'home', name: 'Home', color: '#aa7d55' },
 ]
 
-export const GOLD = '#dbac34'
+export const GOLD = '#e3b53e'
 export const MAX_GOALS = 6
 
 /** Every hundredth brick of a goal comes out gold. */

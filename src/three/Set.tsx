@@ -63,12 +63,14 @@ function drawLabel(canvas: HTMLCanvasElement, name: string, count: number, ink: 
   ctx.clearRect(0, 0, W, H)
   ctx.fillStyle = ink
   ctx.textBaseline = 'middle'
-  ctx.font = '640 60px "Google Sans Flex Variable", sans-serif'
+  ctx.font = '700 150px "Google Sans Flex Variable", sans-serif'
   ctx.textAlign = 'left'
-  ctx.fillText(name, 30, H / 2 + 3)
-  ctx.font = '480 56px "Google Sans Flex Variable", sans-serif'
+  ctx.fillText(name, 48, H / 2 + 8)
+  ctx.globalAlpha = 0.62
+  ctx.font = '560 132px "Google Sans Flex Variable", sans-serif'
   ctx.textAlign = 'right'
-  ctx.fillText(String(count), W - 30, H / 2 + 3)
+  ctx.fillText(String(count), W - 48, H / 2 + 8)
+  ctx.globalAlpha = 1
 }
 
 /** A printed 1x6 tile in front of each plot: the goal's name and its running count. */
@@ -78,8 +80,8 @@ export function LabelTile(props: { plot: { x: number; z: number }; name: string;
   const invalidate = useThree((s) => s.invalidate)
   const [canvas, texture] = useMemo(() => {
     const c = document.createElement('canvas')
-    c.width = 768
-    c.height = 128
+    c.width = 1024
+    c.height = 256
     const t = new THREE.CanvasTexture(c)
     t.colorSpace = THREE.SRGBColorSpace
     t.anisotropy = 8
@@ -95,7 +97,7 @@ export function LabelTile(props: { plot: { x: number; z: number }; name: string;
       invalidate()
     }
     paint()
-    document.fonts.load('640 60px "Google Sans Flex Variable"').then(paint, paint)
+    document.fonts.load('700 150px "Google Sans Flex Variable"').then(paint, paint)
     return () => {
       alive = false
     }

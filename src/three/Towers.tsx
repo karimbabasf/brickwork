@@ -11,6 +11,8 @@ import { goldPlastic, plastic } from './materials'
 
 /** The selected day's bricks sit a hair above their seat, not yet pressed down. */
 export const UNPRESSED = 0.12
+/** The brick under the pointer lifts, as if picked at by a finger. */
+const PICKED = 0.32
 
 const BUCKETS: { key: string; size: SizeKey; gold: boolean }[] = [
   { key: 's', size: 's', gold: false },
@@ -99,6 +101,8 @@ function Bucket({ build, plot, indices, size, gold, count, raised, lift }: Bucke
   const capacity = Math.max(8, 2 ** Math.ceil(Math.log2(indices.length + 1)))
   const material = gold ? goldPlastic() : plastic(build.goal.color)
   const [r0, r1] = raised
+  const slots = useMemo(() => new Map(indices.map((bi, k) => [build.bricks[bi].id, k])), [indices, build])
+  const picked = useView((s) => (s.hover ? (slots.get(s.hover.id) ?? -1) : -1))
 
   useLayoutEffect(() => {
     const mesh = ref.current
@@ -107,7 +111,7 @@ function Bucket({ build, plot, indices, size, gold, count, raised, lift }: Bucke
     const p = new THREE.Vector3()
     indices.forEach((bi, k) => {
       const c = placementCenter(build.placements[bi], plot)
-      p.set(c.x, c.y + (bi >= r0 && bi < r1 ? lift : 0), c.z)
+      p.set(c.x, c.y + (bi >= r0 && bi < r1 ? lift : 0) + (k === picked ? PICKED : 0), c.z)
       m.compose(p, c.rotated ? TURN : STILL, ONE)
       mesh.setMatrixAt(k, m)
     })
@@ -116,7 +120,7 @@ function Bucket({ build, plot, indices, size, gold, count, raised, lift }: Bucke
     mesh.computeBoundingSphere() // over every brick, so picking works while the film hides some
     mesh.count = countBelow(indices, count)
     invalidate()
-  }, [indices, build, plot, r0, r1, lift, capacity, count, invalidate])
+  }, [indices, build, plot, r0, r1, lift, picked, capacity, count, invalidate])
 
   const pick = (e: ThreeEvent<PointerEvent | MouseEvent>) => {
     if (e.instanceId === undefined) return null

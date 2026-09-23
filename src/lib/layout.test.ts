@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { FOOT, SIZE_DIMS, Tower, type SizeKey } from './layout'
+import { FOOT, insetAt, SIZE_DIMS, Tower, type SizeKey } from './layout'
 
 function sizes(n: number, seed: number): SizeKey[] {
   let s = seed
@@ -11,17 +11,18 @@ function sizes(n: number, seed: number): SizeKey[] {
 }
 
 describe('Tower', () => {
-  it('keeps every brick inside its plot, never overlapping, always resting on something', () => {
+  it('keeps every brick inside its layer setback, never overlapping, always resting on something', () => {
     const tower = new Tower('goal-a')
     const taken = new Set<string>()
     sizes(800, 3).forEach((size) => {
       const p = tower.push(size)
       const [a, b] = SIZE_DIMS[size]
       expect(p.w * p.d).toBe(a * b)
-      expect(p.x).toBeGreaterThanOrEqual(0)
-      expect(p.z).toBeGreaterThanOrEqual(0)
-      expect(p.x + p.w).toBeLessThanOrEqual(FOOT)
-      expect(p.z + p.d).toBeLessThanOrEqual(FOOT)
+      const inset = insetAt(p.layer)
+      expect(p.x).toBeGreaterThanOrEqual(inset)
+      expect(p.z).toBeGreaterThanOrEqual(inset)
+      expect(p.x + p.w).toBeLessThanOrEqual(FOOT - inset)
+      expect(p.z + p.d).toBeLessThanOrEqual(FOOT - inset)
       let resting = p.layer === 0
       for (let x = p.x; x < p.x + p.w; x++)
         for (let z = p.z; z < p.z + p.d; z++) {
@@ -43,12 +44,30 @@ describe('Tower', () => {
     expect(part.placements).toEqual(full.placements.slice(0, 180))
   })
 
-  it('packs densely: 800 bricks stay within a few layers of a perfect stack', () => {
+  it('packs densely: 800 bricks stay within a few layers of a perfect stepped stack', () => {
     const tower = new Tower('dense')
     const list = sizes(800, 11)
     list.forEach((s) => tower.push(s))
-    const cells = list.reduce((n, s) => n + SIZE_DIMS[s][0] * SIZE_DIMS[s][1], 0)
-    const perfect = Math.ceil(cells / (FOOT * FOOT))
-    expect(tower.height).toBeLessThanOrEqual(Math.ceil(perfect * 1.15))
+    let cells = list.reduce((n, s) => n + SIZE_DIMS[s][0] * SIZE_DIMS[s][1], 0)
+    let perfect = 0
+    while (cells > 0) {
+      const side = FOOT - 2 * insetAt(perfect)
+      cells -= side * side
+      perfect++
+    }
+    expect(tower.height).toBeLessThanOrEqual(Math.ceil(perfect * 1.08))
+  })
+
+  it('steps back: above the podium the tower is narrower than its base', () => {
+    const tower = new Tower('tall')
+    sizes(500, 5).forEach((s) => tower.push(s))
+    const base = tower.placements.filter((p) => p.layer < 6)
+    const top = tower.placements.filter((p) => p.layer >= 6)
+    expect(top.length).toBeGreaterThan(0)
+    expect(base.some((p) => p.x === 0 || p.x + p.w === FOOT)).toBe(true)
+    for (const p of top) {
+      expect(p.x).toBeGreaterThanOrEqual(1)
+      expect(p.x + p.w).toBeLessThanOrEqual(FOOT - 1)
+    }
   })
 })

@@ -1,10 +1,26 @@
 export type SizeKey = 's' | 'm' | 'l'
 
-export const FOOT = 6 // each goal builds on a FOOT x FOOT stud plot
+export const FOOT = 8 // each goal builds on a FOOT x FOOT stud plot
 export const BRICK_H = 1.2 // brick height in stud pitches (9.6 mm over 8 mm)
 export const PLOT_GAP = 3
-export const LABEL_DEPTH = 1
+export const LABEL_DEPTH = 2
 export const PLINTH_MARGIN = 2
+
+// Setback: a goal first builds a wide podium, then a tower rises from it, so a big goal
+// reads as a building instead of a bar. Keyed by layer, so old bricks never move.
+// (A third 4x4 tier packed up to 30% looser, which shows as holes in the walls.)
+export type Tiers = readonly { from: number; inset: number }[]
+
+export const TIERS: Tiers = [
+  { from: 0, inset: 0 }, // 8x8 podium
+  { from: 6, inset: 1 }, // 6x6 tower
+]
+
+export function insetAt(layer: number, tiers: Tiers = TIERS): number {
+  let inset = 0
+  for (const t of tiers) if (layer >= t.from) inset = t.inset
+  return inset
+}
 
 export const SIZE_DIMS: Record<SizeKey, readonly [number, number]> = {
   s: [1, 2],
@@ -39,26 +55,30 @@ function hash01(a: number, b: number): number {
   return (h >>> 0) / 4294967296
 }
 
-const onEdge = (x: number, z: number) => x === 0 || z === 0 || x === FOOT - 1 || z === FOOT - 1
+const onEdge = (x: number, z: number, inset: number) =>
+  x === inset || z === inset || x === FOOT - 1 - inset || z === FOOT - 1 - inset
 
 /**
  * Stacks one goal's bricks, oldest first. A brick always takes the lowest seat it
- * can, prefers to bridge two bricks below it (running bond), and avoids leaving
- * holes in the outer wall. Placement i depends only on bricks 0..i-1, so adding a
- * brick never moves an older one.
+ * can inside that layer's setback, prefers to bridge two bricks below it (running
+ * bond), and avoids leaving holes in the outer wall. Placement i depends only on
+ * bricks 0..i-1, so adding a brick never moves an older one.
  */
 export class Tower {
   private h = new Int16Array(FOOT * FOOT)
   private top = new Int32Array(FOOT * FOOT).fill(-1)
   private seed: number
+  private tiers: Tiers
   readonly placements: Placement[] = []
 
-  constructor(seed: string) {
+  constructor(seed: string, tiers: Tiers = TIERS) {
     this.seed = fnv1a(seed)
+    this.tiers = tiers
   }
 
   private blocked(x: number, z: number, level: number): number {
-    if (x < 0 || z < 0 || x >= FOOT || z >= FOOT) return 1
+    const inset = insetAt(level, this.tiers)
+    if (x < inset || z < inset || x >= FOOT - inset || z >= FOOT - inset) return 1
     return this.h[x * FOOT + z] > level ? 1 : 0
   }
 
@@ -72,7 +92,7 @@ export class Tower {
     const [a, b] = SIZE_DIMS[size]
     const i = this.placements.length
     const orients: [number, number][] = a === b ? [[a, b]] : [[a, b], [b, a]]
-    let best: Placement = { x: 0, z: 0, w: a, d: b, layer: 0 }
+    let best: Placement | null = null
     let bestScore = Infinity
     for (const [w, d] of orients) {
       for (let x = 0; x <= FOOT - w; x++) {
@@ -80,6 +100,8 @@ export class Tower {
           let L = 0
           for (let dx = 0; dx < w; dx++)
             for (let dz = 0; dz < d; dz++) L = Math.max(L, this.h[(x + dx) * FOOT + z + dz])
+          const inset = insetAt(L, this.tiers)
+          if (x < inset || z < inset || x + w > FOOT - inset || z + d > FOOT - inset) continue
           let holes = 0
           let wallHoles = 0
           let firstBelow = -2
@@ -90,7 +112,7 @@ export class Tower {
               const gap = L - this.h[c]
               if (gap > 0) {
                 holes += gap
-                if (onEdge(x + dx, z + dz)) wallHoles += gap
+                if (onEdge(x + dx, z + dz, inset)) wallHoles += gap
               } else if (L > 0) {
                 const t = this.top[c]
                 if (firstBelow === -2) firstBelow = t
@@ -112,7 +134,7 @@ export class Tower {
           const jitter = hash01(this.seed + i * 7919, (x * 31 + z) * 4 + (w > d ? 1 : 0))
           // Walls first: an outer cell left empty shows as a chip in the tower's face.
           let wallCover = 0
-          for (let dx = 0; dx < w; dx++) for (let dz = 0; dz < d; dz++) if (onEdge(x + dx, z + dz)) wallCover++
+          for (let dx = 0; dx < w; dx++) for (let dz = 0; dz < d; dz++) if (onEdge(x + dx, z + dz, inset)) wallCover++
           const score =
             L * 1000 + holes * 30 + wallHoles * 220 - wallCover * 3 - contact * 7 - (bridges ? 10 : 0) + weave * 4 + jitter * 5
           if (score < bestScore) {
@@ -122,7 +144,8 @@ export class Tower {
         }
       }
     }
-    return best
+    // The top tier always has a free 6x6 above its highest brick, so a seat always exists.
+    return best!
   }
 
   push(size: SizeKey): Placement {

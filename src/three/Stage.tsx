@@ -179,11 +179,19 @@ function KeyLight({ layout, height, look, mood }: { layout: SetLayout; height: n
   const lamp = new THREE.Vector3(-w * 0.28, Math.max(34, height * 1.25 + 22), d * 0.9 + 26)
   const focus = new THREE.Vector3(0, height * 0.32, 0)
   const reach = Math.hypot(w, d, height) * 0.5 + 4
-  const angle = Math.min(1.2, Math.atan(reach / lamp.distanceTo(focus)) * 1.25)
+  const dist = lamp.distanceTo(focus)
+  const angle = Math.min(1.1, Math.atan(reach / dist) * 1.25)
   useLayoutEffect(() => {
     aim.position.copy(focus)
     aim.updateMatrixWorld()
-    spot.current?.shadow.camera.updateProjectionMatrix()
+    const l = spot.current
+    if (l) {
+      // A tight depth range keeps the shadow map's precision on the set, not the empty studio.
+      l.shadow.camera.near = Math.max(2, dist - reach * 1.8)
+      l.shadow.camera.far = dist + reach * 1.8
+      l.shadow.camera.updateProjectionMatrix()
+      l.shadow.needsUpdate = true
+    }
     invalidate()
   })
 
@@ -202,8 +210,8 @@ function KeyLight({ layout, height, look, mood }: { layout: SetLayout; height: n
           color={look.key}
           castShadow
           shadow-mapSize={[2048, 2048]}
-          shadow-bias={-0.0002}
-          shadow-normalBias={0.035}
+          shadow-bias={-0.0006}
+          shadow-normalBias={0.04}
           shadow-radius={5}
         />
       </>
