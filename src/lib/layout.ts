@@ -129,6 +129,26 @@ export class Tower {
           for (let dz = 0; dz < d; dz++) {
             contact += this.blocked(x - 1, z + dz, L) + this.blocked(x + w, z + dz, L)
           }
+          // Look-ahead: a free cell beside this brick that ends up boxed in on all four sides
+          // can only be roofed over later, which leaves a hole. On a face, that hole shows.
+          let stranded = 0
+          const inside = (cx: number, cz: number) => cx >= x && cx < x + w && cz >= z && cz < z + d
+          const open = (cx: number, cz: number, level: number) =>
+            cx >= inset && cz >= inset && cx < FOOT - inset && cz < FOOT - inset && !inside(cx, cz) && this.h[cx * FOOT + cz] <= level
+          const probe = (cx: number, cz: number) => {
+            if (!open(cx, cz, L)) return
+            const lv = this.h[cx * FOOT + cz]
+            if (open(cx + 1, cz, lv) || open(cx - 1, cz, lv) || open(cx, cz + 1, lv) || open(cx, cz - 1, lv)) return
+            stranded += onEdge(cx, cz, inset) ? 6 : 1
+          }
+          for (let dx = 0; dx < w; dx++) {
+            probe(x + dx, z - 1)
+            probe(x + dx, z + d)
+          }
+          for (let dz = 0; dz < d; dz++) {
+            probe(x - 1, z + dz)
+            probe(x + w, z + dz)
+          }
           const along = w === d ? -1 : w > d ? 0 : 1
           const weave = along === -1 || along === (L & 1) ? 0 : 1
           const jitter = hash01(this.seed + i * 7919, (x * 31 + z) * 4 + (w > d ? 1 : 0))
@@ -136,7 +156,7 @@ export class Tower {
           let wallCover = 0
           for (let dx = 0; dx < w; dx++) for (let dz = 0; dz < d; dz++) if (onEdge(x + dx, z + dz, inset)) wallCover++
           const score =
-            L * 1000 + holes * 30 + wallHoles * 350 - wallCover * 20 - contact * 12 - (bridges ? 10 : 0) + weave * 4 + jitter * 2
+            L * 1000 + holes * 30 + wallHoles * 350 + stranded * 150 - wallCover * 20 - contact * 12 - (bridges ? 10 : 0) + weave * 4 + jitter * 2
           if (score < bestScore) {
             bestScore = score
             best = { x, z, w, d, layer: L }

@@ -58,6 +58,24 @@ describe('Tower', () => {
     expect(tower.height).toBeLessThanOrEqual(Math.ceil(perfect * 1.08))
   })
 
+  it('leaves no holes in the faces of a tower', () => {
+    for (const seed of ['demo-build', 'a', 'goal-2', 'zz']) {
+      const tower = new Tower(seed)
+      sizes(600, 7).forEach((s) => tower.push(s))
+      const taken = new Set<string>()
+      for (const p of tower.placements)
+        for (let x = p.x; x < p.x + p.w; x++) for (let z = p.z; z < p.z + p.d; z++) taken.add(`${x},${z},${p.layer}`)
+      for (let L = 0; L < tower.height - 2; L++) {
+        const i = insetAt(L)
+        for (let x = i; x < FOOT - i; x++)
+          for (let z = i; z < FOOT - i; z++) {
+            const face = x === i || z === i || x === FOOT - 1 - i || z === FOOT - 1 - i
+            if (face) expect(taken.has(`${x},${z},${L}`)).toBe(true)
+          }
+      }
+    }
+  })
+
   it('steps back: above the podium the tower is narrower than its base', () => {
     const tower = new Tower('tall')
     sizes(500, 5).forEach((s) => tower.push(s))
