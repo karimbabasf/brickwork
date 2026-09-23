@@ -140,7 +140,7 @@ function Rig({ layout, height }: { layout: SetLayout; height: number }) {
       enabled={!film}
       minPolarAngle={0.3}
       maxPolarAngle={1.42}
-      minDistance={3}
+      minDistance={7}
       maxDistance={900}
       dollyToCursor
       smoothTime={0.32}

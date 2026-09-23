@@ -26,11 +26,11 @@ export function Tooltip() {
   const brick = useStore((s) => (hover ? s.bricks.find((b) => b.id === hover.id) : undefined))
   const goal = useStore((s) => (brick ? s.goals.find((g) => g.id === brick.goal) : undefined))
   if (!hover || !brick || !goal || inspect || film) return null
+  const line = `${goal.name}, ${SIZE_WORD[brick.size]} brick. ${formatDayLong(dayKey(brick.t))}`
+  const width = Math.min(360, Math.max(line.length, (brick.note ?? '').length) * 7.2 + 30)
   return (
-    <div className="tip" style={{ ...above(hover.x, hover.y, 240, brick.note ? 58 : 38), width: 240 }} role="tooltip">
-      <p className="tip-line">
-        {goal.name}, {SIZE_WORD[brick.size]} brick. {formatDayLong(dayKey(brick.t))}
-      </p>
+    <div className="tip" style={{ ...above(hover.x, hover.y, width, brick.note ? 58 : 38), width }} role="tooltip">
+      <p className="tip-line">{line}</p>
       {brick.note && <p className="tip-note">{brick.note}</p>}
     </div>
   )
