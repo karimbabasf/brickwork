@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     port: 5188,
     strictPort: true,
-    proxy: { '/api': { target: process.env.BRICKWORK_API ?? 'https://brickwork.vercel.app', changeOrigin: true } },
+    proxy: { '/api': { target: process.env.BRICKWORK_API ?? 'https://brickwork-iota.vercel.app', changeOrigin: true } },
   },
   preview: { port: 5188, strictPort: true },
 })
