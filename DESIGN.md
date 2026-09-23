@@ -37,7 +37,7 @@ colors:
   brick-lavender: "#ac78ba"
   brick-azure: "#36aebf"
   brick-tan: "#aa7d55"
-  milestone-gold: "#b8862b"
+  milestone-gold: "#d9a23a"
 typography:
   display:
     fontFamily: "Google Sans Flex Variable, Helvetica Neue, sans-serif"
@@ -197,7 +197,7 @@ A warm neutral ink system over a gray studio set, with a toy-brick palette that 
 
 ### Bricks
 - **Build Red, Money Yellow, Body Pink, Learn Blue, People Green, Create Lavender, Rest Azure, Home Tan** (brick-red through brick-tan): one per goal, at most 6 goals on a set.
-- **Milestone Gold** (milestone-gold): every 100th brick of a goal, as metallic ochre plastic (metalness 0.6). Dark enough never to read as Money Yellow.
+- **Milestone Gold** (milestone-gold): every 100th brick of a goal, as lacquered amber-gold plastic (metalness 0.15, clearcoat 0.85, a faint #3a2600 self-light at 0.25). Warmer and deeper than Money Yellow, and it stays gold under the night lamp, where full metal turned olive.
 
 ### Named Rules
 **The Colour Lives In Bricks Rule.** Saturated colour appears only on bricks and brick glyphs. The HTML layer is ink, paper and one orange.

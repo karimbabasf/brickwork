@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T21:53:09.867Z",
+  "title": "Design System: Brickwork",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "#232420",
+        "tonalRamp": [
+          "#070706",
+          "#0e0e0d",
+          "#151613",
+          "#1c1d1a",
+          "#232420",
+          "#656663",
+          "#a7a7a6",
+          "#dedede"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#57564f",
+        "tonalRamp": [
+          "#111110",
+          "#232220",
+          "#34342f",
+          "#46453f",
+          "#57564f",
+          "#898984",
+          "#bcbbb9",
+          "#e6e6e5"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Studio Paper",
+        "canonical": "#dcd8cf",
+        "tonalRamp": [
+          "#2c2b29",
+          "#585653",
+          "#84827c",
+          "#b0ada6",
+          "#dcd8cf",
+          "#e7e4dd",
+          "#f1efec",
+          "#faf9f8"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Card Stock",
+        "canonical": "#f1eee7",
+        "tonalRamp": [
+          "#30302e",
+          "#605f5c",
+          "#918f8b",
+          "#c1beb9",
+          "#f1eee7",
+          "#f5f3ee",
+          "#f9f8f5",
+          "#fdfcfb"
+        ]
+      },
+      "hair": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(35, 36, 32, 0.16)"
+      },
+      "ink-night": {
+        "role": "neutral",
+        "displayName": "Lamp Ink",
+        "canonical": "#efebe3",
+        "tonalRamp": [
+          "#302f2d",
+          "#605e5b",
+          "#8f8d88",
+          "#bfbcb6",
+          "#efebe3",
+          "#f4f1eb",
+          "#f9f7f4",
+          "#fdfcfb"
+        ]
+      },
+      "ink-soft-night": {
+        "role": "neutral",
+        "displayName": "Dim Ink",
+        "canonical": "#aba599",
+        "tonalRamp": [
+          "#22211f",
+          "#44423d",
+          "#67635c",
+          "#89847a",
+          "#aba599",
+          "#c4c0b8",
+          "#dddbd6",
+          "#f2f2f0"
+        ]
+      },
+      "paper-night": {
+        "role": "neutral",
+        "displayName": "Dark Studio",
+        "canonical": "#1d1c19",
+        "tonalRamp": [
+          "#060605",
+          "#0c0b0a",
+          "#11110f",
+          "#171614",
+          "#1d1c19",
+          "#61605e",
+          "#a5a4a3",
+          "#dddddd"
+        ]
+      },
+      "panel-night": {
+        "role": "neutral",
+        "displayName": "Dark Card",
+        "canonical": "#2b2925",
+        "tonalRamp": [
+          "#090807",
+          "#11100f",
+          "#1a1916",
+          "#22211e",
+          "#2b2925",
+          "#6b6966",
+          "#aaa9a8",
+          "#dfdfde"
+        ]
+      },
+      "hair-night": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "canonical": "rgba(239, 235, 227, 0.2)"
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "#f04a00",
+        "tonalRamp": [
+          "#300f00",
+          "#601e00",
+          "#902c00",
+          "#c03b00",
+          "#f04a00",
+          "#f5804d",
+          "#f9b799",
+          "#fde4d9"
+        ]
+      },
+      "signal-press": {
+        "role": "primary",
+        "displayName": "Burnt Signal",
+        "canonical": "#d84200",
+        "tonalRamp": [
+          "#2b0d00",
+          "#561a00",
+          "#822800",
+          "#ad3500",
+          "#d84200",
+          "#e47b4d",
+          "#efb399",
+          "#f9e3d9"
+        ]
+      },
+      "film-black": {
+        "role": "neutral",
+        "displayName": "Letterbox Black",
+        "canonical": "#0c0c0b",
+        "tonalRamp": [
+          "#020202",
+          "#050504",
+          "#070707",
+          "#0a0a09",
+          "#0c0c0b",
+          "#555554",
+          "#9e9e9d",
+          "#dbdbda"
+        ]
+      },
+      "film-type": {
+        "role": "neutral",
+        "displayName": "Slate White",
+        "canonical": "#efece5",
+        "tonalRamp": [
+          "#302f2e",
+          "#605e5c",
+          "#8f8e89",
+          "#bfbdb7",
+          "#efece5",
+          "#f4f2ed",
+          "#f9f7f5",
+          "#fdfcfb"
+        ]
+      },
+      "sweep-day": {
+        "role": "neutral",
+        "displayName": "Day Sweep",
+        "canonical": "#c1c3c2",
+        "tonalRamp": [
+          "#272727",
+          "#4d4e4e",
+          "#747574",
+          "#9a9c9b",
+          "#c1c3c2",
+          "#d4d5d4",
+          "#e6e7e7",
+          "#f6f6f6"
+        ]
+      },
+      "fog-day": {
+        "role": "neutral",
+        "displayName": "Day Haze",
+        "canonical": "#c9cac6",
+        "tonalRamp": [
+          "#282828",
+          "#50514f",
+          "#797977",
+          "#a1a29e",
+          "#c9cac6",
+          "#d9dad7",
+          "#e9eae8",
+          "#f7f7f6"
+        ]
+      },
+      "sweep-night": {
+        "role": "neutral",
+        "displayName": "Night Sweep",
+        "canonical": "#3a3a3e",
+        "tonalRamp": [
+          "#0c0c0c",
+          "#171719",
+          "#232325",
+          "#2e2e32",
+          "#3a3a3e",
+          "#757578",
+          "#b0b0b2",
+          "#e1e1e2"
+        ]
+      },
+      "fog-night": {
+        "role": "neutral",
+        "displayName": "Night Dark",
+        "canonical": "#141413",
+        "tonalRamp": [
+          "#040404",
+          "#080808",
+          "#0c0c0b",
+          "#10100f",
+          "#141413",
+          "#5b5b5a",
+          "#a1a1a1",
+          "#dcdcdc"
+        ]
+      },
+      "plinth-day": {
+        "role": "neutral",
+        "displayName": "Baseplate Slate",
+        "canonical": "#575d66",
+        "tonalRamp": [
+          "#111314",
+          "#232529",
+          "#34383d",
+          "#464a52",
+          "#575d66",
+          "#898e94",
+          "#bcbec2",
+          "#e6e7e8"
+        ]
+      },
+      "plinth-night": {
+        "role": "neutral",
+        "displayName": "Baseplate Night Blue",
+        "canonical": "#46536a",
+        "tonalRamp": [
+          "#0e1115",
+          "#1c212a",
+          "#2a3240",
+          "#384255",
+          "#46536a",
+          "#7e8797",
+          "#b5bac3",
+          "#e3e5e9"
+        ]
+      },
+      "tile-day": {
+        "role": "neutral",
+        "displayName": "Tile White",
+        "canonical": "#f1efe9",
+        "tonalRamp": [
+          "#30302f",
+          "#60605d",
+          "#918f8c",
+          "#c1bfba",
+          "#f1efe9",
+          "#f5f4f0",
+          "#f9f9f6",
+          "#fdfdfc"
+        ]
+      },
+      "tile-night": {
+        "role": "neutral",
+        "displayName": "Tile White (night)",
+        "canonical": "#efebe3",
+        "tonalRamp": [
+          "#302f2d",
+          "#605e5b",
+          "#8f8d88",
+          "#bfbcb6",
+          "#efebe3",
+          "#f4f1eb",
+          "#f9f7f4",
+          "#fdfcfb"
+        ]
+      },
+      "key-day": {
+        "role": "neutral",
+        "displayName": "Softbox White",
+        "canonical": "#fffaf3",
+        "tonalRamp": [
+          "#333231",
+          "#666461",
+          "#999692",
+          "#ccc8c2",
+          "#fffaf3",
+          "#fffcf7",
+          "#fffdfa",
+          "#fffefd"
+        ]
+      },
+      "key-night": {
+        "role": "neutral",
+        "displayName": "Lamp Amber",
+        "canonical": "#ffe2c4",
+        "tonalRamp": [
+          "#332d27",
+          "#665a4e",
+          "#998876",
+          "#ccb59d",
+          "#ffe2c4",
+          "#ffebd6",
+          "#fff3e7",
+          "#fffbf6"
+        ]
+      },
+      "fill-day": {
+        "role": "neutral",
+        "displayName": "Sky Fill",
+        "canonical": "#dde6f5",
+        "tonalRamp": [
+          "#2c2e31",
+          "#585c62",
+          "#858a93",
+          "#b1b8c4",
+          "#dde6f5",
+          "#e7eef8",
+          "#f1f5fb",
+          "#fafbfe"
+        ]
+      },
+      "fill-night": {
+        "role": "neutral",
+        "displayName": "Moon Fill",
+        "canonical": "#8fa6d6",
+        "tonalRamp": [
+          "#1d212b",
+          "#394256",
+          "#566480",
+          "#7285ab",
+          "#8fa6d6",
+          "#b1c1e2",
+          "#d2dbef",
+          "#eef2f9"
+        ]
+      },
+      "seam-shadow": {
+        "role": "neutral",
+        "displayName": "Seam Brown",
+        "canonical": "#1c1812",
+        "tonalRamp": [
+          "#060504",
+          "#0b0a07",
+          "#110e0b",
+          "#16130e",
+          "#1c1812",
+          "#605d59",
+          "#a4a3a0",
+          "#dddcdb"
+        ]
+      },
+      "brick-red": {
+        "role": "tertiary",
+        "displayName": "Build Red",
+        "canonical": "#c91a09",
+        "tonalRamp": [
+          "#280502",
+          "#500a04",
+          "#791005",
+          "#a11507",
+          "#c91a09",
+          "#d95f53",
+          "#e9a39d",
+          "#f7ddda"
+        ]
+      },
+      "brick-yellow": {
+        "role": "tertiary",
+        "displayName": "Money Yellow",
+        "canonical": "#f2cd37",
+        "tonalRamp": [
+          "#30290b",
+          "#615216",
+          "#917b21",
+          "#c2a42c",
+          "#f2cd37",
+          "#f6dc73",
+          "#faebaf",
+          "#fdf8e1"
+        ]
+      },
+      "brick-pink": {
+        "role": "tertiary",
+        "displayName": "Body Pink",
+        "canonical": "#ff698f",
+        "tonalRamp": [
+          "#33151d",
+          "#662a39",
+          "#993f56",
+          "#cc5472",
+          "#ff698f",
+          "#ff96b1",
+          "#ffc3d2",
+          "#ffe9ee"
+        ]
+      },
+      "brick-blue": {
+        "role": "tertiary",
+        "displayName": "Learn Blue",
+        "canonical": "#0055bf",
+        "tonalRamp": [
+          "#001126",
+          "#00224c",
+          "#003373",
+          "#004499",
+          "#0055bf",
+          "#4d88d2",
+          "#99bbe5",
+          "#d9e6f5"
+        ]
+      },
+      "brick-green": {
+        "role": "tertiary",
+        "displayName": "People Green",
+        "canonical": "#237841",
+        "tonalRamp": [
+          "#07180d",
+          "#0e301a",
+          "#154827",
+          "#1c6034",
+          "#237841",
+          "#65a17a",
+          "#a7c9b3",
+          "#deebe3"
+        ]
+      },
+      "brick-lavender": {
+        "role": "tertiary",
+        "displayName": "Create Lavender",
+        "canonical": "#ac78ba",
+        "tonalRamp": [
+          "#221825",
+          "#45304a",
+          "#674870",
+          "#8a6095",
+          "#ac78ba",
+          "#c5a1cf",
+          "#dec9e3",
+          "#f3ebf5"
+        ]
+      },
+      "brick-azure": {
+        "role": "tertiary",
+        "displayName": "Rest Azure",
+        "canonical": "#36aebf",
+        "tonalRamp": [
+          "#0b2326",
+          "#16464c",
+          "#206873",
+          "#2b8b99",
+          "#36aebf",
+          "#72c6d2",
+          "#afdfe5",
+          "#e1f3f5"
+        ]
+      },
+      "brick-tan": {
+        "role": "tertiary",
+        "displayName": "Home Tan",
+        "canonical": "#aa7d55",
+        "tonalRamp": [
+          "#221911",
+          "#443222",
+          "#664b33",
+          "#886444",
+          "#aa7d55",
+          "#c4a488",
+          "#ddcbbb",
+          "#f2ece6"
+        ]
+      },
+      "milestone-gold": {
+        "role": "secondary",
+        "displayName": "Milestone Gold",
+        "canonical": "#d9a23a",
+        "tonalRamp": [
+          "#2b200c",
+          "#574117",
+          "#826123",
+          "#ae822e",
+          "#d9a23a",
+          "#e4be75",
+          "#f0dab0",
+          "#f9f1e1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Step Numeral",
+        "purpose": "Day N of building, top left. 60px under 720px."
+      },
+      "headline": {
+        "displayName": "Film Step",
+        "purpose": "Step number in the film letterbox."
+      },
+      "title": {
+        "displayName": "Picker Title",
+        "purpose": "The goal picker heading. 20px on mobile."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Date line, buttons, inputs."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Pad names, part rows, tips, text buttons."
+      },
+      "caption": {
+        "displayName": "Count",
+        "purpose": "Counts on pads and choices, tabular."
+      }
+    },
+    "shadows": [
+      {
+        "name": "brick-on-paper",
+        "value": "drop-shadow(0 3px 2px rgba(20, 19, 17, 0.3))",
+        "purpose": "Filter under drawn brick glyphs on pads (0.28 in the picker). The only UI shadow."
+      },
+      {
+        "name": "set-ao",
+        "value": "N8AO radius 0.9, falloff 0.6, intensity 2.2, color #1c1812",
+        "purpose": "Ambient occlusion in brick seams on the 3D set."
+      },
+      {
+        "name": "set-tiltshift",
+        "value": "TiltShift2 blur 0.07, taper 0.55, band at 0.46",
+        "purpose": "Faint miniature focus on the set."
+      },
+      {
+        "name": "set-vignette",
+        "value": "offset 0.3, darkness 0.3 day / 0.4 night",
+        "purpose": "Studio falloff at the frame edge."
+      }
+    ],
+    "motion": [
+      {
+        "name": "frame",
+        "value": "83.333ms (12 fps, FRAME_MS)",
+        "purpose": "Every stepped animation ticks on this clock."
+      },
+      {
+        "name": "drop",
+        "value": "5 frames: 2.6, 1.3, 0.38, -0.06, 0.12 (snap on frame 3)",
+        "purpose": "A released brick falls to its seat."
+      },
+      {
+        "name": "count-tick",
+        "value": "up to 10 frames",
+        "purpose": "Counts step toward a new value."
+      },
+      {
+        "name": "hop",
+        "value": "600ms delay, then 6 frames: 0.3, 0.62, 0.78, 0.62, 0.3, 0.04",
+        "purpose": "The shown day's bricks hop once."
+      },
+      {
+        "name": "hold-grow",
+        "value": "2x2 at 380ms, 2x4 at 860ms",
+        "purpose": "Hold length sets brick size."
+      },
+      {
+        "name": "film-orbit",
+        "value": "0.0055 rad per frame",
+        "purpose": "Film camera moves on the brick clock."
+      },
+      {
+        "name": "grain-boil",
+        "value": "1s steps(12) infinite",
+        "purpose": "Film grain during the film; off under reduced motion."
+      },
+      {
+        "name": "camera-ease",
+        "value": "smoothTime 0.32s, 0.08s dragging",
+        "purpose": "Free camera only; the one eased motion."
+      },
+      {
+        "name": "dropbar-hold",
+        "value": "8000ms",
+        "purpose": "How long the last drop line stays."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Film Button",
+      "kind": "button",
+      "refersTo": "tool-film",
+      "description": "The one orange fill: plays the whole build as a 12 fps film.",
+      "html": "<button class=\"ds-tool ds-tool-film\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"6 3 20 12 6 21 6 3\"/></svg><span>Play the film</span></button>",
+      "css": ".ds-tool{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;height:36px;min-width:36px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;border:1px solid var(--hair);background:transparent;color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}.ds-tool:hover{background:var(--wash)}.ds-tool:focus-visible{outline:2px solid var(--signal);outline-offset:2px}.ds-tool-film{background:var(--signal);border-color:var(--signal);color:#fff}.ds-tool-film:hover{background:#d84200}"
+    },
+    {
+      "name": "Tool Button",
+      "kind": "button",
+      "refersTo": "tool",
+      "description": "Hairline ghost tool with an 18px Lucide icon at stroke 1.75.",
+      "html": "<button class=\"ds-tool\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7V5a2 2 0 0 1 2-2h2\"/><path d=\"M17 3h2a2 2 0 0 1 2 2v2\"/><path d=\"M21 17v2a2 2 0 0 1-2 2h-2\"/><path d=\"M7 21H5a2 2 0 0 1-2-2v-2\"/></svg><span>Fit</span></button>",
+      "css": ".ds-tool{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;height:36px;min-width:36px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;border:1px solid var(--hair);background:transparent;color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}.ds-tool:hover{background:var(--wash)}.ds-tool:focus-visible{outline:2px solid var(--signal);outline-offset:2px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink-filled confirm, used once in the picker.",
+      "html": "<button class=\"ds-primary\">Start building</button>",
+      "css": ".ds-primary{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;height:44px;padding:0 22px;border-radius:12px;border:1px solid var(--ink);background:var(--ink);color:var(--panel);font-size:15px;font-weight:660;cursor:pointer}.ds-primary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}.ds-primary:disabled{background:transparent;color:var(--ink-2);border-color:var(--hair);cursor:default}"
+    },
+    {
+      "name": "Goal Pad",
+      "kind": "custom",
+      "refersTo": "pad",
+      "description": "Press for a 2x2, hold for a 2x4. The primary action.",
+      "html": "<button class=\"ds-pad\"><span class=\"ds-pad-brick\"><svg viewBox=\"-24 -21 48 48\" width=\"48\" height=\"48\" aria-hidden=\"true\"><polygon points=\"22.5,13 22.5,-2.6 0,10.4 0,26\" fill=\"#8d1206\"/><polygon points=\"-22.5,13 0,26 0,10.4 -22.5,-2.6\" fill=\"#ad1608\"/><polygon points=\"0,-15.6 22.5,-2.6 0,10.4 -22.5,-2.6\" fill=\"#c91a09\"/></svg></span><span class=\"ds-pad-name\">Build</span><span class=\"ds-pad-count\">128</span></button>",
+      "css": ".ds-pad{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;width:92px;display:grid;justify-items:center;align-items:end;padding:6px 4px 8px;border:1px solid transparent;border-radius:14px;background:transparent;color:var(--ink);cursor:pointer}.ds-pad:hover{background:var(--wash);border-color:var(--hair)}.ds-pad:focus-visible{outline:2px solid var(--signal);outline-offset:2px}.ds-pad-brick{display:flex;align-items:flex-end;justify-content:center;height:58px}.ds-pad-brick svg{filter:drop-shadow(0 3px 2px rgba(20,19,17,.3))}.ds-pad:active .ds-pad-brick{transform:translateY(2px)}.ds-pad-name{margin-top:4px;font-size:13px;font-weight:650}.ds-pad-count{font-size:12px;font-weight:540;color:var(--ink-2);font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Step Numeral",
+      "kind": "custom",
+      "description": "Day N of building, the lead type of the day panel.",
+      "html": "<div class=\"ds-step\">41<span class=\"ds-step-unit\">day</span></div><p class=\"ds-date\">Wednesday 23 September</p>",
+      "css": ".ds-step{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;display:flex;align-items:baseline;gap:10px;font-size:88px;line-height:.86;font-weight:730;letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ink)}.ds-step-unit{font-size:17px;font-weight:650;letter-spacing:0;color:var(--ink-2)}.ds-date{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;margin:10px 0 0;font-size:15px;font-weight:620;color:var(--ink)}"
+    },
+    {
+      "name": "Day Cell",
+      "kind": "nav",
+      "refersTo": "day-cell",
+      "description": "One step of the day strip; the selected day gets an orange bar, never a tint.",
+      "html": "<div class=\"ds-strip\"><button class=\"ds-day\"><span class=\"ds-stack\"><i style=\"width:14px;background:#c91a09\"></i><i style=\"width:14px;background:#0055bf\"></i></span><span class=\"ds-num\">22</span></button><button class=\"ds-day\" aria-selected=\"true\"><span class=\"ds-stack\"><i style=\"width:14px;background:#f2cd37\"></i><i style=\"width:14px;background:#c91a09\"></i><i style=\"width:14px;background:#237841\"></i></span><span class=\"ds-num\">23</span></button></div>",
+      "css": ".ds-strip{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;display:flex;gap:2px}.ds-day{position:relative;width:24px;height:56px;display:grid;grid-template-rows:1fr auto;justify-items:center;align-items:end;padding:0 0 6px;border:0;border-radius:6px;background:transparent;cursor:pointer}.ds-day:hover{background:var(--wash)}.ds-day:focus-visible{outline:2px solid var(--signal);outline-offset:2px}.ds-stack{display:flex;flex-direction:column-reverse;align-items:center;gap:1px;height:34px}.ds-stack i{display:block;height:3px;border-radius:1px}.ds-num{font-size:10px;font-weight:600;color:var(--ink-2);margin-top:3px;font-variant-numeric:tabular-nums}.ds-day[aria-selected=true]::after{content:'';position:absolute;left:6px;right:6px;bottom:1px;height:2px;border-radius:1px;background:var(--signal)}"
+    },
+    {
+      "name": "Note Input",
+      "kind": "input",
+      "description": "Single underline, orange caret.",
+      "html": "<input class=\"ds-note\" placeholder=\"What was it?\">",
+      "css": ".ds-note{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;width:260px;font-size:14px;padding:5px 0;border:0;border-bottom:1px solid rgba(35,36,32,.32);background:transparent;color:var(--ink);outline:none;caret-color:var(--signal)}.ds-note:focus{border-bottom-color:var(--ink)}.ds-note::placeholder{color:var(--ink-2)}"
+    },
+    {
+      "name": "Hover Tip",
+      "kind": "card",
+      "refersTo": "tip",
+      "description": "Flat card stock label for a hovered brick.",
+      "html": "<div class=\"ds-tip\"><p class=\"ds-tip-line\">Build, solid brick</p><p class=\"ds-tip-soft\">Tue 22 Sep</p></div>",
+      "css": ".ds-tip{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;display:inline-block;max-width:360px;padding:8px 12px;border:1px solid var(--hair);border-radius:10px;background:var(--panel);color:var(--ink);font-size:13px;text-align:center}.ds-tip p{margin:0}.ds-tip-line{font-weight:640}.ds-tip-soft{color:var(--ink-2)}"
+    },
+    {
+      "name": "Film Slate",
+      "kind": "custom",
+      "refersTo": "film-bar",
+      "description": "Bottom letterbox bar during the film; cuts in on one frame.",
+      "html": "<div class=\"ds-film\"><span class=\"ds-film-step\">41</span><span class=\"ds-film-date\">Wednesday 23 September</span><button class=\"ds-film-stop\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/></svg>Stop</button></div>",
+      "css": ".ds-film{--paper:#dcd8cf;--panel:#f1eee7;--ink:#232420;--ink-2:#57564f;--hair:rgba(35,36,32,.16);--signal:#f04a00;--wash:rgba(35,36,32,.07);font-family:'Google Sans Flex Variable','Helvetica Neue',sans-serif;font-variation-settings:'ROND' 100;height:72px;display:flex;align-items:center;gap:16px;padding:0 32px;background:#0c0c0b;color:#efece5}.ds-film-step{font-size:40px;font-weight:730;letter-spacing:-.04em;font-variant-numeric:tabular-nums}.ds-film-date{font-size:14px;font-weight:560}.ds-film-stop{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:8px;border:1px solid rgba(239,236,229,.3);background:transparent;color:#efece5;font:inherit;font-size:13px;font-weight:600;cursor:pointer}.ds-film-stop:focus-visible{outline:2px solid #f04a00;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Brickfilm Set",
+    "overview": "Brickwork is a miniature stop-motion set on a desk. Glossy toy bricks stand in towers on a dark studded baseplate, over a paper sweep that curves up into a back wall. The set follows the room's light: the Mac's appearance picks the mood (`prefers-color-scheme`, or `?day` and `?night` to force it). Day is a neutral studio under a soft white key. Night is the same sweep in a dark studio under one warm lamp whose pool falls off into the dark.\n\nThe interface is printed ink sitting on that set, never a panel system laid over it. Two ink weights, one signal orange, and a drawn isometric brick do all the work. Colour belongs to the bricks. Motion runs at 12 frames per second in whole frames, so a jump in time plays as stop motion and the film cuts in and out on a single frame.\n\nDensity is low. The first viewport is the set, full bleed, with the step numeral top left, tools top right, and the goal pads bottom centre with the day strip just above them.",
+    "keyCharacteristics": [
+      "A full-bleed WebGL set with two moods (day, night) that share one geometry.",
+      "Bricks are physical: clearcoat ABS, rounded edges, studs, a seam between neighbours.",
+      "UI is two inks plus one signal orange; colour lives in the bricks.",
+      "Everything that animates steps at 12 fps (83.3 ms per frame).",
+      "Google Sans Flex with the rounded axis at 100, heavy tabular numerals.",
+      "One stroke icon family (Lucide), drawn bricks for every goal reference."
+    ],
+    "rules": [
+      {
+        "name": "The Colour Lives In Bricks Rule",
+        "body": "Saturated colour appears only on bricks and brick glyphs. The HTML layer is ink, paper and one orange.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never Tinted Rule",
+        "body": "A goal's colour is never tinted, dimmed or recoloured for state. Selection, hover and today are shown with marks, weight and washes of ink, not by changing a brick.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Gold Rule",
+        "body": "Gold is reserved for the 100th brick milestone. Nothing else is gold.",
+        "section": "colors"
+      },
+      {
+        "name": "The Signal Is Scarce Rule",
+        "body": "Orange marks the film transport, the selected day and keyboard focus. It never fills a second button.",
+        "section": "colors"
+      },
+      {
+        "name": "The Step Numeral Leads Rule",
+        "body": "The biggest type on screen is always a day count, set heavy and tabular, like a build booklet step. No sentence is ever set larger than it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Count Rule",
+        "body": "Every number that changes (step, part counts, pad counts, day numbers) uses `tabular-nums` so it can tick frame by frame without the line moving.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lit Not Lifted Rule",
+        "body": "Nothing in the HTML layer floats on a shadow. If something needs to read as raised, it is a brick, and the set's light does it.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do step every animation on the 12 fps frame (83.3 ms) and snap to whole poses.",
+      "Do cut the film in and out on one frame.",
+      "Do draw goals as BrickGlyphs in the goal colour, at the glyph scales above.",
+      "Do keep spacing on half studs (4, 8, 12, 16, 24, 32px).",
+      "Do swap only the ink, paper, panel and hairline tokens between day and night; the set swaps through `LOOKS`.",
+      "Do set every changing number in tabular figures.",
+      "Do use Lucide icons at one stroke family (1.75 for 18px tools, 2 to 2.5 for small transport icons)."
+    ],
+    "donts": [
+      "Don't tint, dim or recolour a goal's bricks for state.",
+      "Don't use gold for anything but the 100th brick.",
+      "Don't fill a second button with Signal Orange.",
+      "Don't put box shadows on the HTML layer.",
+      "Don't fade or ease the film, drops or count ticks.",
+      "Don't add streak flames, checklists, a contribution heatmap or bar charts.",
+      "Don't move a placed brick; the build only grows."
+    ]
+  }
+}
