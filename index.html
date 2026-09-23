@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#dcd8cf" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Brickwork</title>
+    <script>
+      // Pick the set's lighting before first paint so night users never see a light flash.
+      ;(function () {
+        var q = location.search
+        var m = /[?&]night\b/.test(q) ? 'night' : /[?&]day\b/.test(q) ? 'day' : matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
+        document.documentElement.dataset.mood = m
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
