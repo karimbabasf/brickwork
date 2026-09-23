@@ -136,7 +136,7 @@ export class Tower {
           let wallCover = 0
           for (let dx = 0; dx < w; dx++) for (let dz = 0; dz < d; dz++) if (onEdge(x + dx, z + dz, inset)) wallCover++
           const score =
-            L * 1000 + holes * 30 + wallHoles * 220 - wallCover * 3 - contact * 7 - (bridges ? 10 : 0) + weave * 4 + jitter * 5
+            L * 1000 + holes * 30 + wallHoles * 350 - wallCover * 20 - contact * 12 - (bridges ? 10 : 0) + weave * 4 + jitter * 2
           if (score < bestScore) {
             bestScore = score
             best = { x, z, w, d, layer: L }

@@ -42,6 +42,7 @@ export function Picker() {
               {goal ? (
                 <input
                   className="choice-name"
+                  size={Math.max(4, goal.name.length)}
                   defaultValue={goal.name}
                   maxLength={18}
                   aria-label={`Name for the ${p.name} goal`}

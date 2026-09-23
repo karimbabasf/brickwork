@@ -57,7 +57,7 @@ export const LOOKS: Record<Mood, SetLook> = {
     fillIntensity: 0.16,
     env: 0.42,
     envBg: '#2a292c',
-    plinth: '#575d66',
+    plinth: '#46536a',
     tile: '#efebe3',
     print: '#232420',
     vignette: 0.4,

@@ -21,12 +21,13 @@ export function plastic(color: string): THREE.MeshPhysicalMaterial {
 
 let gold: THREE.MeshPhysicalMaterial | null = null
 export function goldPlastic(): THREE.MeshPhysicalMaterial {
-  // Pearl gold, not chrome: a full metal reflects the dark studio and reads as a hole.
+  // Metallic ochre: dark enough never to pass for the Money yellow, and lit by the
+  // studio's softboxes so it never reads as a hole (full chrome did).
   gold ??= new THREE.MeshPhysicalMaterial({
     color: GOLD,
-    roughness: 0.3,
-    metalness: 0.3,
-    envMapIntensity: 1.6,
+    roughness: 0.24,
+    metalness: 0.6,
+    envMapIntensity: 2.2,
     clearcoat: 0.6,
     clearcoatRoughness: 0.12,
   })

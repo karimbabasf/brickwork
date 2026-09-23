@@ -588,7 +588,7 @@ button {
 }
 
 .choice-name {
-  width: 100%;
+  max-width: 100%;
   text-align: center;
   font: inherit;
   font-size: 14px;
