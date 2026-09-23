@@ -9,7 +9,7 @@ import type { GoalBuild } from '../lib/derive'
 import { BRICK_H, type SetLayout } from '../lib/layout'
 import { useStore } from '../lib/store'
 import { LOOKS, type Mood, type SetLook } from '../lib/theme'
-import { FRAME_MS, useView } from '../lib/view'
+import { useView } from '../lib/view'
 import { Dust, FlyingBrick, HeldBrick, HOVER, LeavingBrick } from './Hand'
 import { LabelTile, Plinth, PLINTH_H, Sweep } from './Set'
 import { Towers, type TowersProps } from './Towers'
@@ -96,53 +96,23 @@ function Rig({ layout, height }: { layout: SetLayout; height: number }) {
   const userMoved = useView((s) => s.userMoved)
   const fitNonce = useView((s) => s.fitNonce)
   const booted = useRef(false)
-  const bump = useView((s) => s.bump)
   const flying = useStore((s) => s.flying)
 
-  // A drop is a small scene: the camera pushes in on stop-motion steps while the brick
-  // falls, then eases back out once it has landed.
+  // A drop is a small scene: the camera eases in while the brick falls and eases back
+  // out after it lands. Smooth, so only the brick moves on stop-motion steps.
   useEffect(() => {
     const c = controls.current
     if (!c || !flying || film) return
     const home = c.distance
-    const path = [0.96, 0.92, 0.89, 0.88, 0.88, 0.88, 0.88, 0.88, 0.88, 0.88, 0.9, 0.93, 0.96, 0.99, 1]
-    let i = 0
-    const id = window.setInterval(() => {
-      if (i >= path.length) return window.clearInterval(id)
-      void c.dollyTo(home * path[i++], false)
+    void c.dollyTo(home * 0.86, true)
+    invalidate()
+    const back = window.setTimeout(() => {
+      void c.dollyTo(home, true)
       invalidate()
-    }, FRAME_MS)
-    return () => {
-      window.clearInterval(id)
-      void c.dollyTo(home, false)
-      invalidate()
-    }
+    }, 1100)
+    return () => window.clearTimeout(back)
   }, [flying, film, invalidate])
 
-  // A hard landing jolts the view for two frames, like a bumped animation table.
-  useEffect(() => {
-    const c = controls.current
-    if (!c || !bump || film) return
-    const r = c.distance
-    const jolt: [number, number][] = [
-      [0.004, -0.008],
-      [-0.003, 0.003],
-      [0, 0],
-    ]
-    let i = 0
-    const step = () => {
-      if (i >= jolt.length) return window.clearInterval(id)
-      const [x, y] = jolt[i++]
-      void c.setFocalOffset(x * r, y * r, 0, false)
-      invalidate()
-    }
-    const id = window.setInterval(step, FRAME_MS)
-    step()
-    return () => {
-      window.clearInterval(id)
-      void c.setFocalOffset(0, 0, 0, false)
-    }
-  }, [bump, film, invalidate])
 
   const box = useMemo(
     () =>

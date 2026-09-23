@@ -8,7 +8,7 @@ interface View {
   hover: { id: string; x: number; y: number } | null
   userMoved: boolean
   fitNonce: number
-  bump: number // bumps when a brick lands hard; the camera jolts like a knocked table
+  bump: number // counts hard landings; keys each dust puff
   puff: { x: number; y: number; z: number; w: number; d: number; n: number } | null
   set: (p: Partial<Omit<View, 'set'>>) => void
 }
