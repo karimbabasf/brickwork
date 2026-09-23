@@ -1,6 +1,40 @@
-import { CalendarDays, Play, Scan, Volume2, VolumeX } from 'lucide-react'
+import { CalendarDays, Cloud, CloudOff, Play, Scan, Volume2, VolumeX } from 'lucide-react'
+import { useState } from 'react'
 import { useStore } from '../lib/store'
+import { syncLink, useSync } from '../lib/sync'
 import { useView } from '../lib/view'
+
+/** Shown only on a synced device: the state of the sync, and the link for another device. */
+function SyncButton() {
+  const status = useSync((s) => s.status)
+  const [copied, setCopied] = useState(false)
+  if (status === 'off') return null
+  const down = status === 'offline' || status === 'denied'
+  const label =
+    status === 'denied'
+      ? 'This sync link is no longer valid'
+      : down
+        ? 'Offline. Your bricks sync when you are back'
+        : 'Synced. Copy the link to open your log on another device'
+  const share = async () => {
+    const url = syncLink()
+    if (!url || status === 'denied') return
+    try {
+      if (navigator.share && matchMedia('(pointer: coarse)').matches) await navigator.share({ url, title: 'Brickwork' })
+      else await navigator.clipboard.writeText(url)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2400)
+    } catch {
+      // share sheet dismissed
+    }
+  }
+  return (
+    <button type="button" className="tool" aria-label={label} title={label} onClick={share} data-down={down || undefined}>
+      {down ? <CloudOff size={18} strokeWidth={1.75} aria-hidden /> : <Cloud size={18} strokeWidth={1.75} aria-hidden />}
+      {copied && <span>Link copied</span>}
+    </button>
+  )
+}
 
 export function TopBar() {
   const muted = useStore((s) => s.muted)
@@ -28,6 +62,7 @@ export function TopBar() {
           <span>Fit</span>
         </button>
       )}
+      <SyncButton />
       <button
         type="button"
         className="tool"

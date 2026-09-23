@@ -1,6 +1,6 @@
-import { dayKey, nextDayStart } from './days'
-import { Tower, validSeat, type Placement, type SizeKey } from './layout'
-import type { Brick, Goal } from './store'
+import { dayKey, nextDayStart } from './days.js'
+import { Tower, validSeat, type Placement, type SizeKey } from './layout.js'
+import type { Brick, Goal } from './store.js'
 
 export interface GoalBuild {
   goal: Goal
@@ -32,12 +32,34 @@ export function seatFor(goals: Goal[], bricks: Brick[], goal: string, size: Size
   return buildTowers(goals, bricks).get(goal)?.tower.next(size)
 }
 
-/** Gives every brick without a stored seat the one it has on screen now, once. */
+/**
+ * Makes every brick's seat real and unique: bricks keep a valid seat unless an older
+ * brick already holds one of its cells (two devices can pick the same spot offline).
+ * Bricks without a seat are then packed after all kept ones, oldest first, so they
+ * never land on a brick that was logged later.
+ */
 export function withSeats(goals: Goal[], bricks: Brick[]): Brick[] {
-  if (bricks.every((b) => validSeat(b.size, b.at))) return bricks
-  const seat = new Map<string, Placement>()
-  for (const g of buildTowers(goals, bricks).values()) g.bricks.forEach((b, i) => seat.set(b.id, g.placements[i]))
-  return bricks.map((b) => (validSeat(b.size, b.at) ? b : { ...b, at: seat.get(b.id) }))
+  const towers = new Map(goals.map((g) => [g.id, new Tower(g.id)]))
+  const taken = new Map<string, Set<string>>()
+  const keep = new Set<string>()
+  for (const b of bricks) {
+    const tower = towers.get(b.goal)
+    if (!tower || !validSeat(b.size, b.at)) continue
+    const at = b.at
+    const cells: string[] = []
+    for (let x = at.x; x < at.x + at.w; x++) for (let z = at.z; z < at.z + at.d; z++) cells.push(`${x},${z},${at.layer}`)
+    let occ = taken.get(b.goal)
+    if (!occ) taken.set(b.goal, (occ = new Set()))
+    if (cells.some((c) => occ.has(c))) continue
+    cells.forEach((c) => occ.add(c))
+    keep.add(b.id)
+    tower.seat(at)
+  }
+  if (bricks.every((b) => keep.has(b.id) || !towers.has(b.goal))) return bricks
+  return bricks.map((b) => {
+    const tower = towers.get(b.goal)
+    return keep.has(b.id) || !tower ? b : { ...b, at: tower.push(b.size) }
+  })
 }
 
 /** How many of each goal's bricks exist by the end of a day (or all of them). */
@@ -82,3 +104,4 @@ export function bricksByDay(bricks: Brick[]): Map<string, Brick[]> {
   }
   return m
 }
+

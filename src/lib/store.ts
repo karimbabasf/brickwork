@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { dayKey } from './days'
 import { seatFor, withSeats } from './derive'
 import type { Placement, SizeKey } from './layout'
+import { sanitizeDoc, type LogDoc } from './merge'
 import { MAX_GOALS, PRESETS } from './palette'
 
 export interface Goal {
@@ -18,6 +19,7 @@ export interface Brick {
   t: number
   note?: string
   at?: Placement // the seat it landed in; stored so a brick never moves
+  e?: number // when the note last changed, so the newer note wins a sync
 }
 
 interface Saved {
@@ -25,6 +27,8 @@ interface Saved {
   goals: Goal[]
   bricks: Brick[]
   since: string | null // first day of building
+  removed: string[] // bricks taken off, remembered so a synced device cannot bring them back
+  goalsAt: number // when the goal list last changed
   muted: boolean
 }
 
@@ -49,6 +53,7 @@ export interface State extends Saved {
   undoLast: () => void
   removeBrick: (id: string) => void
   left: () => void
+  applyDoc: (doc: LogDoc) => void
   setNote: (id: string, note: string) => void
   setViewDay: (key: string | null) => void
   setMuted: (m: boolean) => void
@@ -67,13 +72,16 @@ function load(): Saved | null {
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return null
-    const s = JSON.parse(raw) as Saved
-    if (s?.v !== 1 || !Array.isArray(s.goals) || !Array.isArray(s.bricks)) return null
-    s.bricks.sort((a, b) => a.t - b.t)
-    return s
+    const parsed = JSON.parse(raw) as { muted?: unknown }
+    const doc = sanitizeDoc(parsed)
+    return doc && { ...doc, muted: parsed.muted === true }
   } catch {
     return null
   }
+}
+
+export function toDoc(s: Saved): LogDoc {
+  return { v: 1, goals: s.goals, bricks: s.bricks, removed: s.removed, since: s.since, goalsAt: s.goalsAt }
 }
 
 function save(s: Saved) {
@@ -85,7 +93,7 @@ function save(s: Saved) {
 }
 
 export function createStore(initial: Saved | null) {
-  const base: Saved = initial ?? { v: 1, goals: [], bricks: [], since: null, muted: false }
+  const base: Saved = initial ?? { v: 1, goals: [], bricks: [], since: null, removed: [], goalsAt: 0, muted: false }
   base.bricks = withSeats(base.goals, base.bricks)
   const store = create<State>()((set, get) => ({
     ...base,
@@ -103,18 +111,20 @@ export function createStore(initial: Saved | null) {
       const existing = goals.find((g) => g.preset === presetKey)
       if (existing) {
         if (bricks.some((b) => b.goal === existing.id)) return // a goal with bricks stays
-        set({ goals: goals.filter((g) => g !== existing) })
+        set({ goals: goals.filter((g) => g !== existing), goalsAt: Date.now() })
         return
       }
       if (goals.length >= MAX_GOALS) return
       const p = PRESETS.find((x) => x.key === presetKey)
       if (!p) return
-      set({ goals: [...goals, { id: uid(), preset: p.key, name: p.name, color: p.color }] })
+      set({ goals: [...goals, { id: uid(), preset: p.key, name: p.name, color: p.color }], goalsAt: Date.now() })
     },
     renameGoal: (id, name) => {
       const clean = name.replace(/\s+/g, ' ').trim().slice(0, 18)
       if (!clean) return
-      set({ goals: get().goals.map((g) => (g.id === id ? { ...g, name: clean } : g)) })
+      const goal = get().goals.find((g) => g.id === id)
+      if (!goal || goal.name === clean) return
+      set({ goals: get().goals.map((g) => (g.id === id ? { ...g, name: clean } : g)), goalsAt: Date.now() })
     },
     setEditing: (on) => {
       if (!on && get().goals.length === 0) return
@@ -153,6 +163,7 @@ export function createStore(initial: Saved | null) {
       const gone = bricks.find((b) => b.id === lastDrop.id) ?? null
       set({
         bricks: bricks.filter((b) => b.id !== lastDrop.id),
+        removed: [...get().removed, lastDrop.id],
         lastDrop: null,
         flying: null,
         leaving: flying === lastDrop.id ? null : gone,
@@ -162,15 +173,33 @@ export function createStore(initial: Saved | null) {
       const { bricks, lastDrop } = get()
       set({
         bricks: bricks.filter((b) => b.id !== id),
+        removed: [...get().removed, id],
         inspect: null,
         lastDrop: lastDrop?.id === id ? null : lastDrop,
         leaving: bricks.find((b) => b.id === id) ?? null,
       })
     },
     left: () => set({ leaving: null }),
+    applyDoc: (doc) => {
+      const s = get()
+      const alive = new Set(doc.bricks.map((b) => b.id))
+      set({
+        goals: doc.goals,
+        bricks: doc.bricks,
+        removed: doc.removed,
+        since: doc.since,
+        goalsAt: doc.goalsAt,
+        editing: s.editing && !(doc.goals.length > 0 && doc.since),
+        flying: s.flying && alive.has(s.flying) ? s.flying : null,
+        inspect: s.inspect && alive.has(s.inspect.id) ? s.inspect : null,
+        lastDrop: s.lastDrop && alive.has(s.lastDrop.id) ? s.lastDrop : null,
+      })
+    },
     setNote: (id, note) => {
       const clean = note.replace(/\s+/g, ' ').trim().slice(0, 80)
-      set({ bricks: get().bricks.map((b) => (b.id === id ? { ...b, note: clean || undefined } : b)) })
+      const b = get().bricks.find((x) => x.id === id)
+      if (!b || (b.note ?? '') === clean) return
+      set({ bricks: get().bricks.map((x) => (x.id === id ? { ...x, note: clean || undefined, e: Date.now() } : x)) })
     },
     setViewDay: (key) => {
       const today = dayKey(Date.now())
@@ -183,8 +212,8 @@ export function createStore(initial: Saved | null) {
 
   let prev = store.getState()
   store.subscribe((s) => {
-    if (s.goals !== prev.goals || s.bricks !== prev.bricks || s.muted !== prev.muted || s.since !== prev.since) {
-      save({ v: 1, goals: s.goals, bricks: s.bricks, since: s.since, muted: s.muted })
+    if (s.goals !== prev.goals || s.bricks !== prev.bricks || s.muted !== prev.muted || s.since !== prev.since || s.removed !== prev.removed) {
+      save({ ...toDoc(s), muted: s.muted })
     }
     prev = s
   })
