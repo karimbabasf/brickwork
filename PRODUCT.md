@@ -10,7 +10,7 @@ web
 
 ## Stack
 
-delegated: Vite, React, TypeScript, three.js through React Three Fiber and drei, postprocessing, and motion for the HTML layer. He named three.js, R3F and motion.dev in the brief; a local web app needs no server. (inferred)
+delegated: Vite, React, TypeScript, three.js through React Three Fiber and drei, postprocessing. He named three.js, R3F and motion.dev in the brief. Hosted on Vercel (https://brickwork-iota.vercel.app) with one serverless function and a private Vercel Blob for sync, at his request on 2026-09-23. Source: github.com/karimbabasf/brickwork (private).
 
 ## Users
 
@@ -33,7 +33,7 @@ Desktop browser on his Mac, sometimes a phone. Short sessions, several times a d
 - Onboarding sets up a handful of goals (topics) with almost no typing.
 - Logging is one gesture per win, with the size of the win as the only input. A short note is optional, never required.
 - Two views: today, and everything over time across goals.
-- Data stays on the device (localStorage). No accounts, no sync, no server. (inferred)
+- One private log syncs across his devices (asked for on 2026-09-23: "host it on vercel... offload anything local"). No accounts: a secret sync link opened once per device. Without the link the app works saved in that browser only.
 - Must stay smooth with years of entries (thousands of bricks). (inferred)
 
 ## Brand Commitments
@@ -44,7 +44,7 @@ Desktop browser on his Mac, sometimes a phone. Short sessions, several times a d
 
 ## Evidence on Hand
 
-None yet. No real entries exist; any demo history is synthetic and labeled as such.
+None yet. The synthetic demo history was removed on 2026-09-23 at his request; never add fake entries to the live app.
 
 ## Product Principles
 
