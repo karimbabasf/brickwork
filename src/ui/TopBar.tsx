@@ -8,12 +8,10 @@ export function TopBar() {
   const viewDay = useStore((s) => s.viewDay)
   const setViewDay = useStore((s) => s.setViewDay)
   const hasBricks = useStore((s) => s.bricks.length > 0)
-  const demo = useStore((s) => s.demo)
   const userMoved = useView((s) => s.userMoved)
 
   return (
     <nav className="topbar" aria-label="View">
-      {demo && <span className="demo-tag">Demo data</span>}
       {viewDay && (
         <button type="button" className="tool" onClick={() => setViewDay(null)}>
           <CalendarDays size={18} strokeWidth={1.75} aria-hidden />

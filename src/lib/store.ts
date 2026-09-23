@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { dayKey } from './days'
-import { demoData } from './demo'
 import { seatFor, withSeats } from './derive'
 import type { Placement, SizeKey } from './layout'
 import { MAX_GOALS, PRESETS } from './palette'
@@ -30,11 +29,11 @@ interface Saved {
 }
 
 export interface State extends Saved {
-  demo: boolean
   editing: boolean // picking goals (first run, or the add button)
   viewDay: string | null // null: today, live
   hold: { goal: string; size: SizeKey; at: number } | null
   flying: string | null // brick id mid-drop; the towers leave it out until it lands
+  leaving: Brick | null // a brick just taken off, shown lifting out of its seat
   lastDrop: { id: string; at: number } | null
   film: boolean
   inspect: { id: string; x: number; y: number } | null
@@ -49,6 +48,7 @@ export interface State extends Saved {
   landed: (id: string) => void
   undoLast: () => void
   removeBrick: (id: string) => void
+  left: () => void
   setNote: (id: string, note: string) => void
   setViewDay: (key: string | null) => void
   setMuted: (m: boolean) => void
@@ -84,16 +84,16 @@ function save(s: Saved) {
   }
 }
 
-export function createStore(initial: Saved | null, demo: boolean) {
+export function createStore(initial: Saved | null) {
   const base: Saved = initial ?? { v: 1, goals: [], bricks: [], since: null, muted: false }
   base.bricks = withSeats(base.goals, base.bricks)
   const store = create<State>()((set, get) => ({
     ...base,
-    demo,
-    editing: base.goals.length === 0 || (!demo && base.since === null),
+    editing: base.goals.length === 0 || base.since === null,
     viewDay: null,
     hold: null,
     flying: null,
+    leaving: null,
     lastDrop: null,
     film: false,
     inspect: null,
@@ -148,9 +148,15 @@ export function createStore(initial: Saved | null, demo: boolean) {
       if (get().flying === id) set({ flying: null })
     },
     undoLast: () => {
-      const { lastDrop, bricks } = get()
+      const { lastDrop, bricks, flying } = get()
       if (!lastDrop) return
-      set({ bricks: bricks.filter((b) => b.id !== lastDrop.id), lastDrop: null, flying: null })
+      const gone = bricks.find((b) => b.id === lastDrop.id) ?? null
+      set({
+        bricks: bricks.filter((b) => b.id !== lastDrop.id),
+        lastDrop: null,
+        flying: null,
+        leaving: flying === lastDrop.id ? null : gone,
+      })
     },
     removeBrick: (id) => {
       const { bricks, lastDrop } = get()
@@ -158,8 +164,10 @@ export function createStore(initial: Saved | null, demo: boolean) {
         bricks: bricks.filter((b) => b.id !== id),
         inspect: null,
         lastDrop: lastDrop?.id === id ? null : lastDrop,
+        leaving: bricks.find((b) => b.id === id) ?? null,
       })
     },
+    left: () => set({ leaving: null }),
     setNote: (id, note) => {
       const clean = note.replace(/\s+/g, ' ').trim().slice(0, 80)
       set({ bricks: get().bricks.map((b) => (b.id === id ? { ...b, note: clean || undefined } : b)) })
@@ -173,18 +181,14 @@ export function createStore(initial: Saved | null, demo: boolean) {
     setInspect: (inspect) => set({ inspect }),
   }))
 
-  if (!demo) {
-    let prev = store.getState()
-    store.subscribe((s) => {
-      if (s.goals !== prev.goals || s.bricks !== prev.bricks || s.muted !== prev.muted || s.since !== prev.since) {
-        save({ v: 1, goals: s.goals, bricks: s.bricks, since: s.since, muted: s.muted })
-      }
-      prev = s
-    })
-  }
+  let prev = store.getState()
+  store.subscribe((s) => {
+    if (s.goals !== prev.goals || s.bricks !== prev.bricks || s.muted !== prev.muted || s.since !== prev.since) {
+      save({ v: 1, goals: s.goals, bricks: s.bricks, since: s.since, muted: s.muted })
+    }
+    prev = s
+  })
   return store
 }
 
-export const isDemo = typeof location !== 'undefined' && new URLSearchParams(location.search).has('demo')
-
-export const useStore = createStore(isDemo ? demoData() : load(), isDemo)
+export const useStore = createStore(load())

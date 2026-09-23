@@ -8,6 +8,8 @@ interface View {
   hover: { id: string; x: number; y: number } | null
   userMoved: boolean
   fitNonce: number
+  bump: number // bumps when a brick lands hard; the camera jolts like a knocked table
+  puff: { x: number; y: number; z: number; w: number; d: number; n: number } | null
   set: (p: Partial<Omit<View, 'set'>>) => void
 }
 
@@ -18,6 +20,8 @@ export const useView = create<View>()((set) => ({
   hover: null,
   userMoved: false,
   fitNonce: 0,
+  bump: 0,
+  puff: null,
   set: (p) => set(p),
 }))
 

@@ -17,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5188. Add `?demo` to see 150 days of made-up history (never saved). `?day` or `?night` forces the lighting.
+Open http://localhost:5188. `?day` or `?night` forces the lighting.
 
 ## Test
 

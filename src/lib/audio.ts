@@ -68,6 +68,40 @@ export function snap(weight = 1) {
   o.connect(g).connect(master!)
   o.start(t)
   o.stop(t + 0.1)
+  if (weight > 1) {
+    // A big brick lands with a low thud under the click.
+    const low = c.createOscillator()
+    low.type = 'sine'
+    low.frequency.setValueAtTime(110, t)
+    low.frequency.exponentialRampToValueAtTime(60, t + 0.14)
+    const lg = c.createGain()
+    lg.gain.setValueAtTime(0.0001, t)
+    lg.gain.exponentialRampToValueAtTime(0.14 * weight, t + 0.006)
+    lg.gain.exponentialRampToValueAtTime(0.0001, t + 0.18)
+    low.connect(lg).connect(master!)
+    low.start(t)
+    low.stop(t + 0.2)
+  }
+}
+
+/** A brick prised off the studs: a bright pop that rises. */
+export function pluck() {
+  if (muted) return
+  const c = ac()
+  if (!c) return
+  const t = c.currentTime
+  burst(c, t, 2800, 1.6, 0.18, 0.035)
+  const o = c.createOscillator()
+  o.type = 'sine'
+  o.frequency.setValueAtTime(320, t)
+  o.frequency.exponentialRampToValueAtTime(760, t + 0.07)
+  const g = c.createGain()
+  g.gain.setValueAtTime(0.0001, t)
+  g.gain.exponentialRampToValueAtTime(0.08, t + 0.005)
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.1)
+  o.connect(g).connect(master!)
+  o.start(t)
+  o.stop(t + 0.12)
 }
 
 export function tick() {
