@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { dayKey } from './days'
-import type { SizeKey } from './layout'
 import { demoData } from './demo'
+import { seatFor, withSeats } from './derive'
+import type { Placement, SizeKey } from './layout'
 import { MAX_GOALS, PRESETS } from './palette'
 
 export interface Goal {
@@ -17,6 +18,7 @@ export interface Brick {
   size: SizeKey
   t: number
   note?: string
+  at?: Placement // the seat it landed in; stored so a brick never moves
 }
 
 interface Saved {
@@ -84,6 +86,7 @@ function save(s: Saved) {
 
 export function createStore(initial: Saved | null, demo: boolean) {
   const base: Saved = initial ?? { v: 1, goals: [], bricks: [], since: null, muted: false }
+  base.bricks = withSeats(base.goals, base.bricks)
   const store = create<State>()((set, get) => ({
     ...base,
     demo,
@@ -128,9 +131,10 @@ export function createStore(initial: Saved | null, demo: boolean) {
     },
     cancelHold: () => set({ hold: null }),
     commitHold: () => {
-      const { hold, bricks, since } = get()
+      const { hold, bricks, since, goals } = get()
       if (!hold) return null
-      const brick: Brick = { id: uid(), goal: hold.goal, size: hold.size, t: Date.now() }
+      const at = seatFor(goals, bricks, hold.goal, hold.size)
+      const brick: Brick = { id: uid(), goal: hold.goal, size: hold.size, t: Date.now(), at }
       set({
         hold: null,
         bricks: [...bricks, brick],

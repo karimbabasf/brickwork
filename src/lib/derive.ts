@@ -1,5 +1,5 @@
 import { dayKey, nextDayStart } from './days'
-import { Tower, type Placement } from './layout'
+import { Tower, validSeat, type Placement, type SizeKey } from './layout'
 import type { Brick, Goal } from './store'
 
 export interface GoalBuild {
@@ -20,10 +20,24 @@ export function buildTowers(goals: Goal[], bricks: Brick[]): Map<string, GoalBui
     const g = out.get(b.goal)
     if (!g) continue
     g.bricks.push(b)
-    g.placements.push(g.tower.push(b.size))
+    // A brick keeps the seat it landed in. Only a brick without a valid seat is packed now.
+    g.placements.push(validSeat(b.size, b.at) ? g.tower.seat(b.at) : g.tower.push(b.size))
   }
   memo = { goals, bricks, out }
   return out
+}
+
+/** Where a new brick for this goal will land: the same seat the held preview shows. */
+export function seatFor(goals: Goal[], bricks: Brick[], goal: string, size: SizeKey): Placement | undefined {
+  return buildTowers(goals, bricks).get(goal)?.tower.next(size)
+}
+
+/** Gives every brick without a stored seat the one it has on screen now, once. */
+export function withSeats(goals: Goal[], bricks: Brick[]): Brick[] {
+  if (bricks.every((b) => validSeat(b.size, b.at))) return bricks
+  const seat = new Map<string, Placement>()
+  for (const g of buildTowers(goals, bricks).values()) g.bricks.forEach((b, i) => seat.set(b.id, g.placements[i]))
+  return bricks.map((b) => (validSeat(b.size, b.at) ? b : { ...b, at: seat.get(b.id) }))
 }
 
 /** How many of each goal's bricks exist by the end of a day (or all of them). */

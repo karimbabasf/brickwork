@@ -168,6 +168,21 @@ export class Tower {
     return best!
   }
 
+  /** Registers a brick that already has a seat. Seats are stored, so bricks never move. */
+  seat(p: Placement): Placement {
+    const i = this.placements.length
+    for (let dx = 0; dx < p.w; dx++)
+      for (let dz = 0; dz < p.d; dz++) {
+        const c = (p.x + dx) * FOOT + p.z + dz
+        if (p.layer + 1 >= this.h[c]) {
+          this.h[c] = p.layer + 1
+          this.top[c] = i
+        }
+      }
+    this.placements.push(p)
+    return p
+  }
+
   push(size: SizeKey): Placement {
     const p = this.next(size)
     const i = this.placements.length
@@ -180,6 +195,26 @@ export class Tower {
     this.placements.push(p)
     return p
   }
+}
+
+/** A stored seat is data from storage or the network: accept it only if it could be real. */
+export function validSeat(size: SizeKey, p: unknown): p is Placement {
+  if (!p || typeof p !== 'object') return false
+  const { x, z, w, d, layer } = p as Record<string, unknown>
+  const ints = [x, z, w, d, layer].every((v) => Number.isInteger(v))
+  if (!ints) return false
+  const [a, b] = SIZE_DIMS[size]
+  const dims = (w === a && d === b) || (w === b && d === a)
+  const inset = insetAt(layer as number)
+  return (
+    dims &&
+    (layer as number) >= 0 &&
+    (layer as number) < 100_000 &&
+    (x as number) >= inset &&
+    (z as number) >= inset &&
+    (x as number) + (w as number) <= FOOT - inset &&
+    (z as number) + (d as number) <= FOOT - inset
+  )
 }
 
 export interface SetLayout {
