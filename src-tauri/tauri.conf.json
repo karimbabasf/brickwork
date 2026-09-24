@@ -1,0 +1,48 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Brickwork",
+  "version": "0.1.0",
+  "identifier": "com.karimbabasf.brickwork",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5188",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Brickwork",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 900,
+        "minHeight": 620,
+        "resizable": true,
+        "center": true,
+        "backgroundColor": "#1d1c19"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost; worker-src 'self' blob:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "dmg"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "public.app-category.productivity",
+    "shortDescription": "A done log you can look at",
+    "macOS": {
+      "minimumSystemVersion": "12.0"
+    }
+  }
+}

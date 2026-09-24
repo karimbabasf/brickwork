@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><radialGradient id="g" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#4a4640"/><stop offset="1" stop-color="#1f1e1b"/></radialGradient></defs>
+<rect x="100" y="100" width="824" height="824" rx="185" fill="url(#g)"/>
+<ellipse cx="512" cy="735" rx="250" ry="70" fill="#000" opacity=".35"/>
+<polygon points="771.8,650.0 771.8,470.0 512.0,620.0 512.0,800.0" fill="#8e1206"/><polygon points="252.2,650.0 512.0,800.0 512.0,620.0 252.2,470.0" fill="#ad1708"/><polygon points="512.0,320.0 771.8,470.0 512.0,620.0 252.2,470.0" fill="#d11d0b"/><path d="M456.9,395.0 A55.1,31.8 0 0 0 567.1,395.0 L567.1,365.0 A55.1,31.8 0 0 1 456.9,365.0 Z" fill="#a31607"/><ellipse cx="512.0" cy="365.0" rx="55.1" ry="31.8" fill="#e2301d"/><path d="M327.0,470.0 A55.1,31.8 0 0 0 437.2,470.0 L437.2,440.0 A55.1,31.8 0 0 1 327.0,440.0 Z" fill="#a31607"/><ellipse cx="382.1" cy="440.0" rx="55.1" ry="31.8" fill="#e2301d"/><path d="M586.8,470.0 A55.1,31.8 0 0 0 697.0,470.0 L697.0,440.0 A55.1,31.8 0 0 1 586.8,440.0 Z" fill="#a31607"/><ellipse cx="641.9" cy="440.0" rx="55.1" ry="31.8" fill="#e2301d"/><path d="M456.9,545.0 A55.1,31.8 0 0 0 567.1,545.0 L567.1,515.0 A55.1,31.8 0 0 1 456.9,515.0 Z" fill="#a31607"/><ellipse cx="512.0" cy="515.0" rx="55.1" ry="31.8" fill="#e2301d"/>
+</svg>
