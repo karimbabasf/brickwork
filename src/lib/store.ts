@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { dayKey } from './days'
 import { seatFor, withSeats } from './derive'
 import type { Placement, SizeKey } from './layout'
-import { sanitizeDoc, type LogDoc } from './merge'
+import { sanitizeDoc, type LogDoc } from './logdoc'
 import { MAX_GOALS, PRESETS } from './palette'
 
 export interface Goal {
@@ -19,7 +19,7 @@ export interface Brick {
   t: number
   note?: string
   at?: Placement // the seat it landed in; stored so a brick never moves
-  e?: number // when the note last changed, so the newer note wins a sync
+  e?: number // when the note last changed
 }
 
 interface Saved {
@@ -27,7 +27,7 @@ interface Saved {
   goals: Goal[]
   bricks: Brick[]
   since: string | null // first day of building
-  removed: string[] // bricks taken off, remembered so a synced device cannot bring them back
+  removed: string[] // bricks taken off
   goalsAt: number // when the goal list last changed
   muted: boolean
 }
